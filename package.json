@@ -1,0 +1,25 @@
+{
+  "name": "@kokkoro/web",
+  "version": "0.0.0",
+  "description": "Create web user interface for kokkoro",
+  "main": "index.js",
+  "engines": {
+    "node": ">= v14"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kokkorojs/web.git"
+  },
+  "keywords": [
+    "kokkoro"
+  ],
+  "author": "yuki",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kokkorojs/web/issues"
+  },
+  "homepage": "https://github.com/kokkorojs/web#readme"
+}

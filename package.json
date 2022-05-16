@@ -1,13 +1,10 @@
 {
   "name": "@kokkoro/web",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Create web user interface for kokkoro",
-  "main": "index.js",
-  "engines": {
-    "node": ">= v14"
-  },
+  "main": "/lib/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node ./lib/index.js"
   },
   "repository": {
     "type": "git",
@@ -21,5 +18,13 @@
   "bugs": {
     "url": "https://github.com/kokkorojs/web/issues"
   },
-  "homepage": "https://github.com/kokkorojs/web#readme"
+  "homepage": "https://github.com/kokkorojs/web#readme",
+  "dependencies": {
+    "koa": "^2.13.4",
+    "koa-router": "^10.1.1"
+  },
+  "devDependencies": {
+    "@types/koa": "^2.13.4",
+    "@types/koa-router": "^7.4.4"
+  }
 }

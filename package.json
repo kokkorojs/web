@@ -1,6 +1,6 @@
 {
   "name": "@kokkoro/web",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Create web user interface for kokkoro",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/kokkorojs/web#readme",
   "dependencies": {
+    "handlebars": "^4.7.7",
     "koa": "^2.13.4",
     "koa-router": "^10.1.1",
     "koa-static": "^5.0.0",

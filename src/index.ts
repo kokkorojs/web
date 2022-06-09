@@ -6,7 +6,11 @@ import { join, relative } from 'path';
 import { getStack } from '@kokkoro/utils';
 
 export const router = new Router();
-const render = views(__workname);
+const render = views(__workname, {
+  map: {
+    html: 'handlebars'
+  }
+})
 
 export class Web extends Koa {
   constructor() {

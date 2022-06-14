@@ -16,6 +16,7 @@ export class Web extends Koa {
   constructor() {
     super();
 
+    this.assets(join(__dirname, '../views'));
     // 基础视图
     this.view('/', viewPath('../views/index'));
     this.view('/error', viewPath('../views/error'));

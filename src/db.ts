@@ -1,3 +1,3 @@
 import { Database } from '@kokkoro/jsondb';
 
-export const database = new Database('kokkoro');
+export const db = new Database('kokkoro');

@@ -5,9 +5,10 @@ import userService from '../service/user.service';
 
 class UserController {
   async login(ctx: Context, next: Next) {
-    const payload = ctx.request.body;
-    const token = jwt.sign(payload, 'kokkoro', {
-      expiresIn: '7d',
+    const { account } = ctx.request.body;
+    const user = userService.getUser(account);
+    const token = jwt.sign(user, 'kokkoro', {
+      expiresIn: '1d',
     });
 
     ctx.result = {
@@ -20,7 +21,8 @@ class UserController {
   }
 
   async register(ctx: Context, next: Next) {
-    const data = await userService.registerUser();
+    const { account, password } = ctx.request.body;
+    const data = userService.registerUser(account, password);
 
     ctx.result = {
       data,
@@ -32,7 +34,7 @@ class UserController {
   async modify(ctx: Context, next: Next) {
     const oldUser = ctx.state.user;
     const newUser = ctx.request.body;
-    const data = await userService.modifyUser(oldUser, newUser);
+    const data = userService.modifyUser(oldUser, newUser);
 
     ctx.result = {
       data,

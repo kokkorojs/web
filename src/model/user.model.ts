@@ -1,12 +1,13 @@
+import { v4 as uuidv4 } from 'uuid';
+
 class User {
-  /** 是否是默认生成的初始值 */
-  public initial: boolean;
+  public id: string;
 
   constructor(
     public account: string,
     public password: string,
   ) {
-    this.initial = true;
+    this.id = uuidv4();
   }
 }
 

@@ -5,34 +5,59 @@ import User from '../model/user.model';
 
 class UserService {
   registerUser(account: string, password: string) {
-    const has_register = this.hasRegister();
+    const has_user = this.hasUser(account);
 
-    if (has_register) {
-      throw new SourceError(409, '用户已注册');
+    if (has_user) {
+      throw new SourceError(409, '用户名已被注册');
     }
-    const user = new User(account, password);
+    const user = deepClone(db.user);
 
-    db.user = [
-      user,
-    ];
+    user.push(new User(account, password));
+    db.user = user;
 
     return {
       account,
     }
   }
 
-  hasRegister() {
-    return !!db.user?.length;
-  }
+  hasUser(account: string): boolean {
+    db.user ??= [];
 
-  getUser(account: string) {
     const user = deepClone(db.user);
+    const user_count = user.length;
 
-    for (let i = 0; i < user?.length; i++) {
+    for (let i = 0; i < user_count; i++) {
       const element = user[i];
 
       if (element.account === account) {
-        return element;
+        return true;
+      }
+    }
+    return false;
+  }
+
+  getUserList() {
+    db.user ??= [];
+
+    const user = deepClone(db.user);
+    const user_count = user.length;
+
+    for (let i = 0; i < user_count; i++) {
+      const element = user[i];
+      delete element.password;
+    }
+    return user;
+  }
+
+  loginUser(account: string, password: string) {
+    const user = deepClone(db.user);
+    const user_count = user.length;
+
+    for (let i = 0; i < user_count; i++) {
+      const element = user[i];
+
+      if (element.account === account && element.password === password) {
+        return element.id;
       }
     }
   }
@@ -42,9 +67,9 @@ class UserService {
     const user_count = user.length;
 
     for (let i = 0; i < user_count; i++) {
-      const { account } = user[i];
+      const { id } = user[i];
 
-      if (account !== oldUser.account) {
+      if (id !== oldUser.id) {
         continue;
       }
       user[i].account = newUser.account;

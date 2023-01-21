@@ -4,13 +4,13 @@ import userService from '../service/user.service';
 
 export async function verifyLogin(ctx: Context, next: Next) {
   const { account, password } = ctx.request.body ?? {};
-  const user = userService.getUser(account);
+  const id = userService.loginUser(account, password);
 
-  if (!user) {
-    throw new SourceError(403, '用户名不存在');
-  } else if (user.password !== password) {
-    throw new SourceError(403, '密码错误');
+  if (!id) {
+    throw new SourceError(403, '用户名或密码错误');
   }
+  ctx.request.body.id = id;
+
   await next();
 }
 
@@ -20,10 +20,10 @@ export async function verifyRegister(ctx: Context, next: Next) {
   if (!account || !password) {
     throw new SourceError(403, '用户名与密码不能为空');
   }
-  const user = userService.getUser(account);
+  const has_user = userService.hasUser(account);
 
-  if (user) {
-    throw new SourceError(403, '用户名已存在');
+  if (has_user) {
+    throw new SourceError(409, '用户名已被注册');
   }
   await next();
 }

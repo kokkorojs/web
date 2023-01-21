@@ -5,9 +5,11 @@ import userService from '../service/user.service';
 
 class UserController {
   async login(ctx: Context, next: Next) {
-    const { account } = ctx.request.body;
-    const user = userService.getUser(account);
-    const token = jwt.sign(user, 'kokkoro', {
+    const { id, account, password } = ctx.request.body;
+    const payload = {
+      id, account, password,
+    };
+    const token = jwt.sign(payload, 'kokkoro', {
       expiresIn: '1d',
     });
 

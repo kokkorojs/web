@@ -10,5 +10,6 @@ const router = new Router({
 router.post('/login', verifyLogin, userController.login);
 router.post('/register', verifyRegister, userController.register);
 router.put('/modify', authHandler, userController.modify);
+router.get('/list', userController.list);
 
 export default router;

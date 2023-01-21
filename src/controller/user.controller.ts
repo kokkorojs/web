@@ -4,6 +4,18 @@ import { Context } from '../app';
 import userService from '../service/user.service';
 
 class UserController {
+  async list(ctx: Context, next: Next) {
+    const user = userService.getUserList();
+
+    ctx.result = {
+      data: {
+        list: user,
+      },
+      message: '获取成功',
+    };
+    return next();
+  }
+
   async login(ctx: Context, next: Next) {
     const { id, account, password } = ctx.request.body;
     const payload = {

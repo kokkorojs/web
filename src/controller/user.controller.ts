@@ -5,11 +5,11 @@ import userService from '../service/user.service';
 
 class UserController {
   async list(ctx: Context, next: Next) {
-    const user = userService.getUserList();
+    const userList = userService.getUserList();
 
     ctx.result = {
       data: {
-        list: user,
+        userList,
       },
       message: '获取成功',
     };

@@ -50,6 +50,8 @@ class UserService {
   }
 
   loginUser(account: string, password: string) {
+    db.user ??= [];
+
     const user = deepClone(db.user);
     const user_count = user.length;
 

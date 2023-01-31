@@ -1,3 +1,5 @@
+import { join } from 'path';
 import { Database } from '@kokkoro/jsondb';
 
-export const db = new Database('kokkoro');
+const path = join(__dataname, 'db/kokkoro');
+export const db = new Database(path);

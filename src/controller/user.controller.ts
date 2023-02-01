@@ -5,11 +5,11 @@ import userService from '../service/user.service';
 
 class UserController {
   async list(ctx: Context, next: Next) {
-    const userList = userService.getUserList();
+    const list = userService.getUserList();
 
     ctx.result = {
       data: {
-        userList,
+        list,
       },
       message: '获取成功',
     };
@@ -53,6 +53,18 @@ class UserController {
     ctx.result = {
       data,
       message: '用户修改成功',
+    };
+    return next();
+  }
+
+  async remove(ctx: Context, next: Next) {
+    const { account } = ctx.request.body;
+    const { account: self } = ctx.state.user;
+    const data = userService.removeUser(account, self);
+
+    ctx.result = {
+      data,
+      message: '用户删除成功',
     };
     return next();
   }

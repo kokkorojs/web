@@ -11,5 +11,6 @@ router.post('/login', verifyLogin, userController.login);
 router.post('/register', verifyRegister, userController.register);
 router.put('/modify', authHandler, userController.modify);
 router.get('/list', userController.list);
+router.delete('/remove', authHandler, userController.remove);
 
 export default router;

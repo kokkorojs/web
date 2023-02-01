@@ -18,10 +18,10 @@ class BotService {
     const bots: Bot[] = [];
 
     botList.forEach((bot) => {
-      const { config, uin, nickname, sex, age, tiny_id } = bot;
+      const { config, uin, nickname, sex, age, tiny_id, password } = bot;
       const element = {
         online: bot.isOnline(),
-        uin, nickname, sex, age, tiny_id, config,
+        uin, nickname, sex, age, tiny_id, config, password,
       };
 
       bots.push(element);

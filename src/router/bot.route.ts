@@ -9,6 +9,6 @@ const router = new Router({
 router.get('/list', botController.list);
 router.post('/login', botController.login);
 router.post('/logout', botController.logout);
-router.post('/qrcode', botController.qrcode);
+router.post('/query-qrcode-result', botController.queryQrcodeResult);
 
 export default router;

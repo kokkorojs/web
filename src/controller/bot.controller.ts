@@ -33,10 +33,19 @@ class BotController {
   }
 
   async logout(ctx: Context, next: Next) {
+    const { uin } = ctx.request.body;
+    const result = await botService.logoutBot(uin);
+
+    ctx.result = {
+      data: {
+        uin,
+      },
+      message: '登出成功',
+    };
     return next();
   }
 
-  async qrcode(ctx: Context, next: Next) {
+  async queryQrcodeResult(ctx: Context, next: Next) {
     const { uin } = ctx.request.body;
     const result = await botService.queryQrcodeResult(uin);
 

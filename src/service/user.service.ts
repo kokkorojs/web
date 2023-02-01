@@ -83,6 +83,33 @@ class UserService {
       account: newUser.account,
     }
   }
+
+  removeUser(account: string, self: string) {
+    if (account === self) {
+      throw new SourceError(409, '不能自己删除自己');
+    }
+    const has_user = this.hasUser(account);
+
+    if (!has_user) {
+      throw new SourceError(409, '用户名不存在');
+    }
+    const user = deepClone(db.user);
+    const user_count = user.length;
+
+    for (let i = 0; i < user_count; i++) {
+      const element = user[i];
+
+      if (account !== element.account) {
+        continue;
+      }
+      user.splice(i, 1);
+      db.user = user;
+    }
+
+    return {
+      account,
+    }
+  }
 }
 
 export default new UserService();

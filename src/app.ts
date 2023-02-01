@@ -1,5 +1,6 @@
 import Koa from 'koa';
-import { koaBody } from 'koa-body';
+import serve from "koa-static";
+import { HttpMethodEnum, koaBody } from 'koa-body';
 import router from './router';
 import responseHandler from './middleware/response.middleware';
 
@@ -16,7 +17,12 @@ export class SourceError extends Error {
 
 export const app = new Koa();
 
+// app.use(serve(__dirname + '/views', {
+//   extensions: ['html'],
+// }));
 app.use(responseHandler);
-app.use(koaBody());
+app.use(koaBody({
+  parsedMethods: ['POST', 'PUT', 'GET', 'DELETE'] as HttpMethodEnum[]
+}));
 app.use(router.routes());
 app.use(router.allowedMethods());

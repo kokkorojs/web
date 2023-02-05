@@ -1,5 +1,3 @@
-import { join } from 'path';
-import { Database } from '@kokkoro/jsondb';
+import { createDatabase } from 'kokkoro';
 
-const path = join(__dataname, 'db/kokkoro');
-export const db = new Database(path);
+export const db = createDatabase('kokkoro');

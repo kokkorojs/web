@@ -1,5 +1,4 @@
-import { mapToObject } from '@kokkoro/utils';
-import { getBotList, Client } from '../../../kokkoro';
+import { getBotList, Client } from 'kokkoro';
 import { SourceError } from '../app';
 
 interface Bot {

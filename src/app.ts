@@ -19,7 +19,7 @@ export class SourceError extends Error {
 
 export const app = new Koa();
 
-const view_path = join(require.resolve('@kokkoro/admin'), 'dist');
+const view_path = join(require.resolve('@kokkoro/admin'), '../dist');
 
 app.use(serve(view_path, {
   extensions: ['html'],

@@ -1,4 +1,4 @@
-import Router from 'koa-router';
+import Router from '@koa/router';
 import userController from '../controller/user.controller';
 import authHandler from '../middleware/auth.middleware';
 import { verifyLogin, verifyRegister } from '../middleware/user.middleware';

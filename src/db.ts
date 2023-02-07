@@ -1,3 +1,3 @@
-import { createDatabase } from 'kokkoro';
+import { Database } from 'kokkoro';
 
-export const db = createDatabase('kokkoro');
+export const db = new Database('kokkoro');

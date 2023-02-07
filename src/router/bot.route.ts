@@ -1,4 +1,4 @@
-import Router from 'koa-router';
+import Router from '@koa/router';
 import botController from '../controller/bot.controller';
 import authHandler from '../middleware/auth.middleware';
 

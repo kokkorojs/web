@@ -54,6 +54,36 @@ class BotService {
     const bot = this.getBot(uin);
     return bot.queryQrcodeResult();
   }
+
+  getFriendList(uin: number) {
+    const bot = this.getBot(uin);
+
+    return {
+      list: bot.fl,
+    };
+  }
+
+  getGroupList(uin: number) {
+    const bot = this.getBot(uin);
+
+    return {
+      list: bot.gl,
+    };
+  }
+
+  async sendPrivateMsg(uin: number, ...params: Parameters<Client['sendPrivateMsg']>) {
+    const bot = this.getBot(uin);
+    const result = await bot.sendPrivateMsg(...params);
+
+    return result;
+  }
+
+  async sendGroupMsg(uin: number, ...params: Parameters<Client['sendGroupMsg']>) {
+    const bot = this.getBot(uin);
+    const result = await bot.sendGroupMsg(...params);
+
+    return result;
+  }
 }
 
 export default new BotService();

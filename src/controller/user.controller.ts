@@ -5,12 +5,10 @@ import userService from '../service/user.service';
 
 class UserController {
   async list(ctx: Context, next: Next) {
-    const list = userService.getUserList();
+    const data = await userService.getUserList();
 
     ctx.result = {
-      data: {
-        list,
-      },
+      data,
       message: '获取成功',
     };
     return next();
@@ -36,7 +34,7 @@ class UserController {
 
   async register(ctx: Context, next: Next) {
     const { account, password } = ctx.request.body;
-    const data = userService.registerUser(account, password);
+    const data = await userService.registerUser(account, password);
 
     ctx.result = {
       data,
@@ -48,7 +46,7 @@ class UserController {
   async modify(ctx: Context, next: Next) {
     const oldUser = ctx.state.user;
     const newUser = ctx.request.body;
-    const data = userService.modifyUser(oldUser, newUser);
+    const data = await userService.modifyUser(oldUser, newUser);
 
     ctx.result = {
       data,
@@ -60,7 +58,7 @@ class UserController {
   async remove(ctx: Context, next: Next) {
     const { account } = ctx.request.body;
     const { account: self } = ctx.state.user;
-    const data = userService.removeUser(account, self);
+    const data = await userService.removeUser(account, self);
 
     ctx.result = {
       data,

@@ -20,7 +20,7 @@ export async function verifyRegister(ctx: Context, next: Next) {
   if (!account || !password) {
     throw new SourceError(403, '用户名与密码不能为空');
   }
-  const has_user = userService.hasUser(account);
+  const has_user = await userService.hasUser(account);
 
   if (has_user) {
     throw new SourceError(409, '用户名已被注册');

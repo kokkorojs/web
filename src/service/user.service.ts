@@ -1,29 +1,38 @@
-import { deepClone } from '@kokkoro/utils';
-import { db } from '../db';
 import { SourceError } from '../app';
+import db from '../db';
 import User from '../model/user.model';
 
 class UserService {
-  registerUser(account: string, password: string) {
-    const has_user = this.hasUser(account);
+  constructor() {
+    this.initUser();
+  }
+
+  private async initUser(): Promise<void> {
+    const has_user = await db.has('user');
+
+    if (!has_user) {
+      await db.put('user', []);
+    }
+  }
+
+  public async registerUser(account: string, password: string) {
+    const has_user = await this.hasUser(account);
 
     if (has_user) {
       throw new SourceError(409, '用户名已被注册');
     }
-    const user = deepClone(db.user);
+    const user = await db.get('user');
 
     user.push(new User(account, password));
-    db.user = user;
+    await db.put('user', user);
 
     return {
       account,
-    }
+    };
   }
 
-  hasUser(account: string): boolean {
-    db.user ??= [];
-
-    const user = deepClone(db.user);
+  public async hasUser(account: string): Promise<boolean> {
+    const user = await db.get('user');
     const user_count = user.length;
 
     for (let i = 0; i < user_count; i++) {
@@ -36,23 +45,26 @@ class UserService {
     return false;
   }
 
-  getUserList() {
-    db.user ??= [];
-
-    const user = deepClone(db.user);
+  public async getUserList() {
+    const user = await db.get('user');
     const user_count = user.length;
+    const userList = [];
 
     for (let i = 0; i < user_count; i++) {
-      const element = user[i];
-      delete element.password;
+      const { id, account, createTime } = user[i];
+      const info = {
+        id, account, createTime,
+      };
+
+      userList.push(info);
     }
-    return user;
+    return {
+      list: userList,
+    };
   }
 
-  loginUser(account: string, password: string) {
-    db.user ??= [];
-
-    const user = deepClone(db.user);
+  public async loginUser(account: string, password: string) {
+    const user = await db.get('user');
     const user_count = user.length;
 
     for (let i = 0; i < user_count; i++) {
@@ -64,8 +76,8 @@ class UserService {
     }
   }
 
-  modifyUser(oldUser: User, newUser: Omit<User, 'id'>) {
-    const user = deepClone(db.user);
+  public async modifyUser(oldUser: User, newUser: Omit<User, 'id'>) {
+    const user = await db.get('user');
     const user_count = user.length;
 
     for (let i = 0; i < user_count; i++) {
@@ -77,23 +89,23 @@ class UserService {
       user[i].account = newUser.account;
       user[i].password = newUser.password;
 
-      db.user = user;
+      await db.put('user', user);
     }
     return {
       account: newUser.account,
-    }
+    };
   }
 
-  removeUser(account: string, self: string) {
+  public async removeUser(account: string, self: string) {
     if (account === self) {
-      throw new SourceError(409, '不能自己删除自己');
+      throw new SourceError(409, '不能删除自己');
     }
     const has_user = this.hasUser(account);
 
     if (!has_user) {
       throw new SourceError(409, '用户名不存在');
     }
-    const user = deepClone(db.user);
+    const user = await db.get('user');
     const user_count = user.length;
 
     for (let i = 0; i < user_count; i++) {
@@ -103,12 +115,12 @@ class UserService {
         continue;
       }
       user.splice(i, 1);
-      db.user = user;
+      await db.put('user', user);
     }
 
     return {
       account,
-    }
+    };
   }
 }
 

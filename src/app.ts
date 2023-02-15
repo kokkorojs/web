@@ -3,6 +3,7 @@ import { join } from 'path';
 import cors from "@koa/cors";
 import serve from "koa-static";
 import { HttpMethodEnum, koaBody } from 'koa-body';
+
 import router from './router';
 import responseHandler from './middleware/response.middleware';
 
@@ -19,7 +20,7 @@ export class SourceError extends Error {
 
 export const app = new Koa();
 
-const view_path = join(require.resolve('@kokkoro/admin'), '../dist');
+const view_path = join(require.resolve('@kokkoro/admin'), '../../dist');
 
 app.use(serve(view_path, {
   extensions: ['html'],
@@ -27,7 +28,7 @@ app.use(serve(view_path, {
 app.use(cors());
 app.use(responseHandler);
 app.use(koaBody({
-  parsedMethods: ['POST', 'PUT', 'GET', 'DELETE'] as HttpMethodEnum[]
+  parsedMethods: ['POST', 'PUT', 'GET', 'DELETE'] as HttpMethodEnum[],
 }));
 app.use(router.routes());
 app.use(router.allowedMethods());

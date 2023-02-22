@@ -19,8 +19,10 @@ class BotController {
     const { uin } = ctx.request.body;
     const result = await botService.loginBot(uin);
 
-    if (result.data.status) {
-      ctx.result = result;
+    if (result.status) {
+      ctx.result = {
+        data: result,
+      };
     } else {
       ctx.result = {
         data: {

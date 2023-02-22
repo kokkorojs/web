@@ -1,20 +1,20 @@
-import { getBotList, Client } from 'kokkoro';
+import { getBotList, Bot } from '@kokkoro/core';
 import { SourceError } from '../app';
 
-interface Bot {
-  uin: Client['uin'];
+interface BotInfo {
+  uin: Bot['uin'];
   online: boolean;
-  nickname: Client['nickname'];
-  sex: Client['sex'];
-  age: Client['age'];
-  tiny_id: Client['tiny_id'];
-  config: Client['config'];
+  nickname: Bot['nickname'];
+  sex: Bot['sex'];
+  age: Bot['age'];
+  tiny_id: Bot['tiny_id'];
+  config: Bot['config'];
 }
 
 class BotService {
   getBotList() {
     const botList = getBotList();
-    const bots: Bot[] = [];
+    const infos: BotInfo[] = [];
 
     botList.forEach((bot) => {
       const { config, uin, nickname, sex, age, tiny_id, password } = bot;
@@ -23,9 +23,9 @@ class BotService {
         uin, nickname, sex, age, tiny_id, config, password,
       };
 
-      bots.push(element);
+      infos.push(element);
     });
-    return bots;
+    return infos;
   }
 
   getBot(uin: number) {
@@ -71,14 +71,14 @@ class BotService {
     };
   }
 
-  async sendPrivateMsg(uin: number, ...params: Parameters<Client['sendPrivateMsg']>) {
+  async sendPrivateMsg(uin: number, ...params: Parameters<Bot['sendPrivateMsg']>) {
     const bot = this.getBot(uin);
     const result = await bot.sendPrivateMsg(...params);
 
     return result;
   }
 
-  async sendGroupMsg(uin: number, ...params: Parameters<Client['sendGroupMsg']>) {
+  async sendGroupMsg(uin: number, ...params: Parameters<Bot['sendGroupMsg']>) {
     const bot = this.getBot(uin);
     const result = await bot.sendGroupMsg(...params);
 

@@ -1,5 +1,5 @@
 import { deepClone } from '@kokkoro/utils';
-import { getPluginList } from 'kokkoro';
+import { getPluginList } from '@kokkoro/core';
 
 class PluginService {
   getPluginList() {
